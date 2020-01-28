@@ -12,7 +12,7 @@ public class User {
 	private String name;
 	
 	@JsonIgnore
-	private String password;
+	private String password;//@JsonIgnore在post返回user时，忽略password的属性
 	private Integer age;
 	@JsonFormat(pattern="yyyy-MM-dd hh:mm:ss a", locale="zh", timezone="GMT+8")
 	private Date birthday;

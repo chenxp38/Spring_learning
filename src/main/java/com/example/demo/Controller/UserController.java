@@ -13,7 +13,7 @@ import com.example.demo.pojo.User;
 //@Controller
 @RestController		// @RestController = @Controller + @ResponseBody
 @RequestMapping("/user")
-public class UserContoller {
+public class UserController {
 
 	@RequestMapping("/getUser")
 //	@ResponseBody
@@ -34,11 +34,11 @@ public class UserContoller {
 	public JSONResult getUserJson() {
 		
 		User u = new User();
-		u.setName("chen1");
+		u.setName("chen3");
 		u.setAge(18);
 		u.setBirthday(new Date());
-		u.setPassword("cxp1");
-		u.setDesc("getUserJson");
+		u.setPassword("cxp3");
+		u.setDesc("getUserJson3");
 		
 		return JSONResult.ok(u);
 	}
