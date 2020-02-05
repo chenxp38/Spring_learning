@@ -21,8 +21,8 @@ public class AcceptController {
     }
 
     @RequestMapping("/getUser")
-    public JSONResult getUser(@RequestBody User user) {
-        System.out.println(user.getName());
+    public JSONResult getUser(@RequestHeader(name = "SessionID") String SessionID, @RequestBody User user) {
+        System.out.println(SessionID+user.getName());
         return JSONResult.ok(user);
     }
 
