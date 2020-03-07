@@ -6,48 +6,68 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-	
+	private String uid;
+	@JsonIgnore
+	private String openid;
+	@JsonInclude(Include.NON_NULL)
 	private String name;
 	
-	@JsonIgnore
+
 	private String password;//@JsonIgnore在post返回user时，忽略password的属性
-	private Integer age;
-	@JsonFormat(pattern="yyyy-MM-dd hh:mm:ss a", locale="zh", timezone="GMT+8")
-	private Date birthday;
-	
+	private Integer balance;
 	@JsonInclude(Include.NON_NULL)
-	private String desc;
-	
+	private String sex;
+	//@JsonFormat(pattern="yyyy-MM-dd hh:mm:ss a", locale="zh", timezone="GMT+8")
+	//private Date birthday;
+
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getAge() {
-		return age;
-	}
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getBirthday() {
-		return birthday;
+	public Integer getBalance() {
+		return balance;
 	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
+
+	public String getSex() {
+		return sex;
 	}
-	public String getDesc() {
-		return desc;
+
+	public void setBalance(Integer balance) {
+		this.balance = balance;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
+
 }

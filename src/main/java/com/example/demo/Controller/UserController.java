@@ -20,11 +20,12 @@ public class UserController {
 	public User getUser() {
 		
 		User u = new User();
+		u.setUid("001");
+		u.setOpenid("openid001");
 		u.setName("chen");
-		u.setAge(18);
-		u.setBirthday(new Date());
+		u.setBalance(18);
 		u.setPassword("cxp");
-		u.setDesc("getUser");
+		u.setSex("man");
 		
 		return u;
 	}
@@ -34,11 +35,12 @@ public class UserController {
 	public JSONResult getUserJson() {
 		
 		User u = new User();
-		u.setName("chen3");
-		u.setAge(18);
-		u.setBirthday(new Date());
-		u.setPassword("cxp3");
-		u.setDesc("getUserJson3");
+		u.setUid("001");
+		u.setOpenid("openid001");
+		u.setName("chen");
+		u.setBalance(18);
+		u.setPassword("cxp");
+		u.setSex("man");
 		
 		return JSONResult.ok(u);
 	}
