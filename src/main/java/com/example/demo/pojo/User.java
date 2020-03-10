@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
 	private String uid;
-	@JsonIgnore
 	private String openid;
 	@JsonInclude(Include.NON_NULL)
 	private String name;
