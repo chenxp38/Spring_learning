@@ -19,6 +19,7 @@ public class User {
 	private Integer balance;
 	@JsonInclude(Include.NON_NULL)
 	private String sex;
+	private String phone;
 	//@JsonFormat(pattern="yyyy-MM-dd hh:mm:ss a", locale="zh", timezone="GMT+8")
 	//private Date birthday;
 
@@ -42,6 +43,7 @@ public class User {
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -53,6 +55,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public Integer getBalance() {
 		return balance;
 	}
@@ -68,5 +71,13 @@ public class User {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
 
 }

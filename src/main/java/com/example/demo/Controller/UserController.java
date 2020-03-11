@@ -26,7 +26,7 @@ public class UserController {
 		u.setBalance(18);
 		u.setPassword("cxp");
 		u.setSex("man");
-		
+		u.setPhone("18376062741");
 		return u;
 	}
 	
@@ -41,7 +41,7 @@ public class UserController {
 		u.setBalance(18);
 		u.setPassword("cxp");
 		u.setSex("man");
-		
+		u.setPhone("18376062741");
 		return JSONResult.ok(u);
 	}
 }

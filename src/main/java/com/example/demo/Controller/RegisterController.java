@@ -53,7 +53,7 @@ public class RegisterController {
                 }
             }
 
-            String sql3 = "insert into User(uid, openid, name, password, balance, sex) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql3 = "insert into User(uid, openid, name, password, balance, sex, phone) VALUES (?, ?, ?, ?, ?, ?, ?)";
             //预编译SQL
             preparedStatement = (PreparedStatement) connection.prepareStatement(sql3);
             //设置参数值
@@ -63,6 +63,7 @@ public class RegisterController {
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setInt(5, user.getBalance());
             preparedStatement.setString(6, user.getSex());
+            preparedStatement.setString(7, user.getPhone());
 
             //执行SQL
             preparedStatement.executeUpdate();
