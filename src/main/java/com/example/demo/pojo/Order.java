@@ -7,7 +7,7 @@ public class Order {
     String uid;
     Date date;
     String venue;//场馆
-    Integer cost;//一般为负数
+    Integer cost;//一般为正数
     Boolean status; //是否完成订单（使用场馆）
 
     public String getOrder_id() {

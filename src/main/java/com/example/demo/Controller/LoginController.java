@@ -77,6 +77,10 @@ public class LoginController {
     public Object getSessionId(HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(-1); //方法体内的参数interval为秒。
+            System.out.println(session.getId());
+            System.out.println(session.getId());
+            System.out.println(session.getId());
             return session.getId();
         } catch (Exception e) {
             e.printStackTrace();

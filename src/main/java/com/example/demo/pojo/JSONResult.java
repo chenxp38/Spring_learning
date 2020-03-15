@@ -40,6 +40,7 @@ public class JSONResult {
     private Object data;
     
     private String ok;	// 不使用
+    private Integer length;//一般不使用
 
     public static JSONResult build(Integer status, String msg, Object data) {
         return new JSONResult(status, msg, data);
@@ -47,6 +48,10 @@ public class JSONResult {
 
     public static JSONResult ok(Object data) {
         return new JSONResult(data);
+    }
+
+    public static  JSONResult ok2(Object data, Integer length) {
+        return new JSONResult(data, length);
     }
 
     public static JSONResult ok() {
@@ -82,6 +87,12 @@ public class JSONResult {
         this.msg = msg;
         this.data = data;
     }
+    public JSONResult(Object data, Integer length) {
+        this.status = 200;
+        this.msg = "Ok";
+        this.data = data;
+        this.length = length;
+    }
 
     public JSONResult(Object data) {
         this.status = 200;
@@ -115,6 +126,14 @@ public class JSONResult {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
     }
 
     /**
