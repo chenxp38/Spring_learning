@@ -14,6 +14,8 @@ import java.sql.*;
 import java.util.Iterator;
 import java.util.Set;
 
+import static com.example.demo.Controller.RedisLinkTest.saveSession;
+
 @RequestMapping("/Login")
 @RestController
 public class LoginController {
@@ -83,6 +85,7 @@ public class LoginController {
             HttpSession session = request.getSession();
             //session.setMaxInactiveInterval(6000); //方法体内的参数interval为秒。
             System.out.println(session.getId());
+            saveSession(session.getId(), "aaa");
             return session.getId();
         } catch (Exception e) {
             e.printStackTrace();

@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static com.example.demo.Controller.RedisLinkTest.getSessionValue;
+
 @RequestMapping("/Notice")
 @RestController
 public class NoticeController {
@@ -19,6 +23,7 @@ public class NoticeController {
 
     @RequestMapping("/notice")
     public JSONResult user_register(@RequestHeader(name = "SessionID") String SessionID) {
+        String openid = getSessionValue(SessionID);
         List<Notice> list = new ArrayList<Notice>();
         Integer length = 0;
         try {
@@ -40,6 +45,7 @@ public class NoticeController {
                 System.out.println("create..........."+ notice_id + " " + content + " " + date.toString());
                 list.add(notice);
             }
+            list.add(new Notice("005", openid, new Date()));
             length = list.size();
             return JSONResult.ok2(list, length);
         } catch (SQLException e) {
