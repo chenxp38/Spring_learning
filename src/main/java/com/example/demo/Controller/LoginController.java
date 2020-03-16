@@ -2,13 +2,17 @@ package com.example.demo.Controller;
 import com.example.demo.DemoApplication;
 import com.example.demo.pojo.DB_User;
 import com.example.demo.pojo.JSONResult;
+import com.example.demo.pojo.RedisUtils;
 import com.example.demo.pojo.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.*;
+import java.util.Iterator;
+import java.util.Set;
 
 @RequestMapping("/Login")
 @RestController
@@ -77,9 +81,7 @@ public class LoginController {
     public Object getSessionId(HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(-1); //方法体内的参数interval为秒。
-            System.out.println(session.getId());
-            System.out.println(session.getId());
+            //session.setMaxInactiveInterval(6000); //方法体内的参数interval为秒。
             System.out.println(session.getId());
             return session.getId();
         } catch (Exception e) {
@@ -87,5 +89,7 @@ public class LoginController {
         }
         return null;
     }
+
+
 
 }
