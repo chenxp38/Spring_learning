@@ -60,6 +60,7 @@ public class RegisterController {
             preparedStatement.setString(1, user.getUid());
             preparedStatement.setString(2, user.getOpenid());
             preparedStatement.setString(3, user.getName());
+            //System.out.println("name:..........."+ user.getName());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setInt(5, user.getBalance());
             preparedStatement.setString(6, user.getSex());

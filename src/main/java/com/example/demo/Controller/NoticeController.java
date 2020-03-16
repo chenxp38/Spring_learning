@@ -73,4 +73,5 @@ public class NoticeController {
         }
         return JSONResult.ok(list);
     }
+
 }
