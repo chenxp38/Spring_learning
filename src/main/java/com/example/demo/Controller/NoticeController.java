@@ -23,6 +23,7 @@ public class NoticeController {
 
     @RequestMapping("/notice")
     public JSONResult user_register(@RequestHeader(name = "SessionID") String SessionID) {
+        System.out.println(SessionID);
         String openid = getSessionValue(SessionID);
         List<Notice> list = new ArrayList<Notice>();
         Integer length = 0;
@@ -45,7 +46,7 @@ public class NoticeController {
                 System.out.println("create..........."+ notice_id + " " + content + " " + date.toString());
                 list.add(notice);
             }
-            list.add(new Notice("005", openid, new Date()));
+            //list.add(new Notice("005", openid, new Date()));
             length = list.size();
             return JSONResult.ok2(list, length);
         } catch (SQLException e) {

@@ -80,12 +80,12 @@ public class LoginController {
      */
     @RequestMapping("/getSessionId")
     @ResponseBody
-    public Object getSessionId(HttpServletRequest request) {
+    public Object getSessionId(HttpServletRequest request, @RequestParam(name = "openid") String openid) {
         try {
             HttpSession session = request.getSession();
             //session.setMaxInactiveInterval(6000); //方法体内的参数interval为秒。
-            System.out.println(session.getId());
-            saveSession(session.getId(), "aaa");
+            System.out.println(openid + session.getId());
+            saveSession(session.getId(), openid);
             return session.getId();
         } catch (Exception e) {
             e.printStackTrace();
