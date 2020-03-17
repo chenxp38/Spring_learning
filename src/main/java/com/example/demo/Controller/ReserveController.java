@@ -73,6 +73,7 @@ public class ReserveController {
                 preparedStatement.setString(1, uid);
                 preparedStatement.setString(2, venue);
                 preparedStatement.setDate(3, date1);
+                System.out.println(date1.toString());
                 //执行SQL
                 resultSet = preparedStatement.executeQuery();
                 //判断是否重复预定
@@ -80,6 +81,9 @@ public class ReserveController {
                 if (resultSet.getRow() == 0) {//行号为0，则 ResultSet 为空。
                     //可以预定，插入数据
                     resultSet.beforeFirst();
+                    if (balance < cost) {
+                        return JSONResult.errorMsg("您的运动时余额不足啦！");
+                    }
                     Integer count = getOrderCount();
                     String order_id = getOrderid(count);
                     //System.out.println("count: " + " " + count + " " + order_id);
@@ -107,6 +111,9 @@ public class ReserveController {
                     preparedStatement.executeUpdate();
                 }
                 else {
+                    while (resultSet.next()) {
+                        System.out.println("date:?" + resultSet.getDate("date"));
+                    }
                     return JSONResult.errorMsg("今日您已预定该场馆！");
                 }
             }else {

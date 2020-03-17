@@ -15,7 +15,7 @@ public class DB_User {
 
     static {
         driver="com.mysql.cj.jdbc.Driver";//需要的数据库驱动
-        url="jdbc:mysql://101.132.157.149:3306/gym_database?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";//数据库名路径
+        url="jdbc:mysql://101.132.157.149:3306/gym_database?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai";//数据库名路径
         username="root";
         password="root";
     }
