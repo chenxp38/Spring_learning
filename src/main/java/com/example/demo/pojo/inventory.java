@@ -5,6 +5,7 @@ public class inventory {
     String location;
     Integer inventory;  //库存量
     boolean is_remainder; //是否剩余
+    Integer cost;
 
     public String getId() {
         return id;
@@ -36,5 +37,13 @@ public class inventory {
 
     public void setIs_remainder(boolean is_remainder) {
         this.is_remainder = is_remainder;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
+
+    public Integer getCost() {
+        return cost;
     }
 }
