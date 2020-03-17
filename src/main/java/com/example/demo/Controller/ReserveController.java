@@ -27,6 +27,7 @@ public class ReserveController {
         Integer cost = 0;
         Date date = new Date();
         java.sql.Date date1 =  new java.sql.Date(date.getTime());
+        Integer balance = 0;
 
 
         try {
@@ -60,16 +61,18 @@ public class ReserveController {
                 resultSet.beforeFirst();
                 while (resultSet.next()) {//用if判断不行，亲测
                     uid = resultSet.getString("uid");
-                    System.out.println(uid + " " + inventory + " " + openid);
+                    balance = resultSet.getInt("balance");
+                    System.out.println(uid + " " + balance + " " + inventory + " " + openid);
                 }
                 //有库存并且能找到该用户的注册信息
                 //检查该用户今天是否已经预定了该场馆
-                String sql3 = "select * from Order_table where uid = ? and venue = ?";
+                String sql3 = "select * from Order_table where uid = ? and venue = ? and date = ?";
                 //预编译
                 preparedStatement = (PreparedStatement) connection.prepareStatement(sql3);
                 //设置参数值
                 preparedStatement.setString(1, uid);
                 preparedStatement.setString(2, venue);
+                preparedStatement.setDate(3, date1);
                 //执行SQL
                 resultSet = preparedStatement.executeQuery();
                 //判断是否重复预定
@@ -91,7 +94,17 @@ public class ReserveController {
 
                     preparedStatement.executeUpdate();//注意执行的方法名,insert和update时要特别注意
                     //预定成功，对应场馆的库存量减一
-                    
+                    String sql5 = "update inventory set inventory = ? where location = ?";
+                    preparedStatement = (PreparedStatement) connection.prepareStatement(sql5);
+                    preparedStatement.setInt(1, inventory - 1);
+                    preparedStatement.setString(2, venue);
+                    preparedStatement.executeUpdate();
+                    //用户运动时余额减去相应cost
+                    String sql6 = "update User set balance = ? where uid = ?";
+                    preparedStatement = (PreparedStatement) connection.prepareStatement(sql6);
+                    preparedStatement.setInt(1, balance - cost);
+                    preparedStatement.setString(2, uid);
+                    preparedStatement.executeUpdate();
                 }
                 else {
                     return JSONResult.errorMsg("今日您已预定该场馆！");
