@@ -12,7 +12,7 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
-        timer_update();
+        timer_update();//每天23：59：59更新库存量
     }
 
 
