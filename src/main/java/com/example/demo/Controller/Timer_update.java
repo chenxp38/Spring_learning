@@ -33,8 +33,8 @@ public class Timer_update{
     }
 
     public static int getRestTime(){//返回当前时间距离00：00还有多少毫秒
-        //获取当前时间
-        String current_time = new SimpleDateFormat("hh:mm:ss").format(new Date());
+        //获取当前时间,H大写为24小时制，h小写为12小时制。
+        String current_time = new SimpleDateFormat("HH:mm:ss").format(new Date());
 
         Integer hour = (current_time.charAt(0) - 48) * 10 + (current_time.charAt(1) - 48);
         Integer min = (current_time.charAt(3) - 48) * 10 + (current_time.charAt(4) - 48);
