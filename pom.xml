@@ -81,6 +81,18 @@
             <version>5.1.35</version>
         </dependency>
 
+        <!-- 其他的依赖 -->
+
+        <dependency>
+            <groupId>mysql_connector</groupId>
+            <artifactId>mysql_connector_java</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/mysql-connector-java-8.0.19.jar</systemPath>
+        </dependency>
+
+
+
     </dependencies>
 
     <build>
@@ -95,6 +107,15 @@
                     <addResources>true</addResources>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
