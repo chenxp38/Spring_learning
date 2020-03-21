@@ -8,7 +8,7 @@ public class Notice { //通知列表，不常更新
     String notice_id;
     String content;
 
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyyMMddHHmmss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     Date date;
 
     public Notice(String notice_id_, String content_, Date date_) {
