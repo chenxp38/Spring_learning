@@ -1,9 +1,11 @@
 package com.example.demo.Controller;
 import com.example.demo.DemoApplication;
-import com.example.demo.pojo.DB_User;
-import com.example.demo.pojo.JSONResult;
-import com.example.demo.pojo.RedisUtils;
-import com.example.demo.pojo.User;
+import com.example.demo.pojo.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.mockito.internal.util.StringUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.Jedis;
@@ -11,7 +13,9 @@ import redis.clients.jedis.Jedis;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import static com.example.demo.Controller.RedisLinkTest.saveSession;
@@ -76,21 +80,47 @@ public class LoginController {
     }
 
     /**
-     * 获得sessionId
+     * 获得openid和sessionId
      */
-    @RequestMapping("/getSessionId")
+    @RequestMapping("/getOpenid_SessionId")
     @ResponseBody
-    public Object getSessionId(HttpServletRequest request, @RequestParam(name = "openid") String openid) {
+    public List<String> getOpenid_SessionId(HttpServletRequest request, @RequestParam(name = "openid_code") String openid_code) throws JsonProcessingException {
+        String result = "";
+        String appid = "wx5fb04c9b878a70ee";
+        String app_secret = "614fa56d4eb1dfdd01d35877b6cd82ad";
+        String openid = "";
+        String sessionID = "";
+        List<String> list = new ArrayList<String>();
+        try{//请求微信服务器，用code换取openid。HttpUtil是工具类，后面会给出实现，Configure类是小程序配置信息，后面会给出代码
+            result = HttpUtil.doGet(
+                    "https://api.weixin.qq.com/sns/jscode2session?appid="
+                            + appid + "&secret="
+                            + app_secret + "&js_code="
+                            + openid_code
+                            + "&grant_type=authorization_code", null);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        OpenIdJson openIdJson = mapper.readValue(result,OpenIdJson.class);
+        System.out.println("getOpenid123:" + result.toString());
+        // System.out.println("getOpenid123:" + openIdJson.getSession_key());
+        System.out.println("getOpenid:" + openIdJson.getOpenid());
+        openid = openIdJson.getOpenid();
+        list.add(openid);
+
         try {
             HttpSession session = request.getSession();
             //session.setMaxInactiveInterval(6000); //方法体内的参数interval为秒。
             System.out.println(openid + session.getId());
             saveSession(session.getId(), openid);
-            return session.getId();
+            sessionID = session.getId();
+            list.add(sessionID);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return list;
     }
 
 

@@ -3,11 +3,13 @@ D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\Controller\Lo
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\pojo\History.java
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\Controller\Cancel_Controller.java
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\pojo\Notice.java
+D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\Controller\HttpUtil.java
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\pojo\Order.java
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\Controller\BalanceController.java
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\Controller\HistoryController.java
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\Controller\NoticeController.java
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\pojo\inventory.java
+D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\pojo\OpenIdJson.java
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\pojo\DB_User.java
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\Controller\ReserveController.java
 D:\Learning_cxp\java_workspace\demo\src\main\java\com\example\demo\pojo\RedisUtils.java
