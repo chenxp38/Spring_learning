@@ -132,7 +132,26 @@
             </plugin>
 
         </plugins>
+
+        <resources>
+            <resource>
+                <!-- 设置demo为根目录 -->
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.pfx</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.pfx</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
+
 
 
 
