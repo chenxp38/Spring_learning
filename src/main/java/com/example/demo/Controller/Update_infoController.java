@@ -35,7 +35,7 @@ public class Update_infoController {
             preparedStatement.setString(1, uid);
             //执行SQL
             resultSet = preparedStatement.executeQuery();
-
+            list.clear();
             while (resultSet.next()) {//即使只有一条检索结果，也不能图省事去掉while，因为要判断resultSet，防止为null，用if判断应该也行
                 name = resultSet.getString("name");
                 sex = resultSet.getString("sex");
@@ -43,9 +43,8 @@ public class Update_infoController {
                 list.add(name);
                 list.add(phone);
                 list.add(sex);//返回后a记得要清空
-                return JSONResult.ok(list);
             }
-            list.clear();
+
             return JSONResult.ok(list);
 
         } catch (SQLException e) {
