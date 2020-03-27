@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 				门户接受此类数据后需要使用本类的方法转换成对于的数据类型格式（类，或者list）
  * 				其他自行处理
  * 				200：表示成功
- * 				500：表示错误，错误信息在msg字段中
+ * 				400：表示错误，错误信息在msg字段中
  * 				501：bean验证错误，不管多少个错误都以map形式返回
  * 				502：拦截器拦截到用户token出错
  * 				555：异常抛出信息
@@ -59,7 +59,7 @@ public class JSONResult {
     }
     
     public static JSONResult errorMsg(String msg) {
-        return new JSONResult(500, msg, null);
+        return new JSONResult(400, msg, null);
     }
     
     public static JSONResult errorMap(Object data) {

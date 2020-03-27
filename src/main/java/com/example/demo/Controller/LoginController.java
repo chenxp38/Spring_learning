@@ -31,8 +31,6 @@ public class LoginController {
     public JSONResult user_sign_in(@RequestHeader(name = "SessionID") String SessionID, @RequestBody User user) {
 
         try {
-
-
             String sql = "select * from User where uid = ?";
             connection = DB_User.open();
             //预编译SQL

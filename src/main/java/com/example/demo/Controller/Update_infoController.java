@@ -42,9 +42,12 @@ public class Update_infoController {
                 phone = resultSet.getString("phone");
                 list.add(name);
                 list.add(phone);
-                list.add(sex);
+                list.add(sex);//返回后a记得要清空
+                return JSONResult.ok(list);
             }
+            list.clear();
             return JSONResult.ok(list);
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
