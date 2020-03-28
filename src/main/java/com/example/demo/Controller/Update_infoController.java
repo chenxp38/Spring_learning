@@ -44,7 +44,6 @@ public class Update_infoController {
                 list.add(phone);
                 list.add(sex);//返回后a记得要清空
             }
-
             return JSONResult.ok(list);
 
         } catch (SQLException e) {
