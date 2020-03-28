@@ -3,10 +3,13 @@ package com.example.demo.Controller;
 
 import com.example.demo.pojo.DB_User;
 import com.example.demo.pojo.JSONResult;
+import com.example.demo.pojo.inventory;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static com.example.demo.Controller.RedisLinkTest.getSessionValue;
 
@@ -16,6 +19,58 @@ public class ReserveController {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
+    List<Integer> list = new ArrayList<Integer>();
+
+    @RequestMapping("/getInventory")
+    @ResponseBody
+    public  JSONResult getInventory(@RequestHeader(name = "SessionID") String SessionID, @RequestParam(name = "venue") String venue) {
+        list.clear();
+        System.out.println(venue);
+        try {
+            String sql = "select * from inventory where location like ?";
+            connection = DB_User.open();
+            //预编译SQL
+            preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+            //设置参数值
+            preparedStatement.setString(1, venue+'%');
+            //执行SQL
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {//即使只有一条检索结果，也不能图省事去掉while，因为要判断resultSet，防止为null，用if判断应该也行
+                String id = resultSet.getString("id");
+                ///String location = resultSet.getString("location");
+                Integer inventory = resultSet.getInt("inventory"); //库存量
+                //boolean is_remainder = resultSet.getBoolean("is_remainder");
+                //Integer cost = resultSet.getInt("cost");
+                //inventory inventory1 = new inventory(id, location, inventory, is_remainder, cost);
+                //System.out.println(inventory1.toString());
+                list.add(inventory);
+            }
+            Integer length = list.size();
+            return JSONResult.ok2(list, length);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (connection != null) {
+                DB_User.close(connection);
+            }
+        }
+        return JSONResult.ok("list3");
+    }
 
     @RequestMapping("/reserve")
     @ResponseBody

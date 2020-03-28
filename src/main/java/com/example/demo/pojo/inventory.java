@@ -7,6 +7,13 @@ public class inventory {
     boolean is_remainder; //是否剩余
     Integer cost;
 
+    public inventory(String id_, String location_, Integer inventory_, boolean is_remainder_, Integer cost_){
+        id = id_;
+        location = location_;
+        inventory = inventory_;
+        is_remainder = is_remainder_;
+        cost = cost_;
+    }
     public String getId() {
         return id;
     }
@@ -45,5 +52,16 @@ public class inventory {
 
     public Integer getCost() {
         return cost;
+    }
+
+    @Override
+    public String toString() {
+        return "inventory{" +
+                "id='" + id + '\'' +
+                ", location='" + location + '\'' +
+                ", inventory=" + inventory +
+                ", is_remainder=" + is_remainder +
+                ", cost=" + cost +
+                '}';
     }
 }
