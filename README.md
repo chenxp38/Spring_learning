@@ -1,3 +1,3 @@
 # 小程序码
-![](./image/tiyan.jpg)
+![](https://github.com/chenxp38/Spring_learning/blob/master/image/tiyan.jpg)
 
