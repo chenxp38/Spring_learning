@@ -27,7 +27,7 @@ public class ReserveController {
         list.clear();
         System.out.println(venue);
         try {
-            String sql = "select * from inventory where location like ?";
+            String sql = "select * from Inventory where location like ?";
             connection = DB_User.open();
             //预编译SQL
             preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
@@ -86,7 +86,7 @@ public class ReserveController {
 
 
         try {
-            String sql = "select * from inventory where location = ?";
+            String sql = "select * from Inventory where location = ?";
             connection = DB_User.open();
             //预编译SQL
             preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
@@ -153,7 +153,7 @@ public class ReserveController {
 
                     preparedStatement.executeUpdate();//注意执行的方法名,insert和update时要特别注意
                     //预定成功，对应场馆的库存量减一
-                    String sql5 = "update inventory set inventory = ? where location = ?";
+                    String sql5 = "update inventory set Inventory = ? where location = ?";
                     preparedStatement = (PreparedStatement) connection.prepareStatement(sql5);
                     preparedStatement.setInt(1, inventory - 1);
                     preparedStatement.setString(2, venue);

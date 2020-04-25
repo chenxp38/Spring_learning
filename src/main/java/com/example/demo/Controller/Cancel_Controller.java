@@ -74,7 +74,7 @@ public class Cancel_Controller {
                 balance = resultSet.getInt("balance");
             }
 
-            String sql4 = "select * from inventory where location = ?";
+            String sql4 = "select * from Inventory where location = ?";
             //预编译SQL
             preparedStatement = (PreparedStatement) connection.prepareStatement(sql4);
             //设置参数值
@@ -87,7 +87,7 @@ public class Cancel_Controller {
 
 
 
-            String sql5 = "update inventory set inventory = ? where location = ?";
+            String sql5 = "update Inventory set inventory = ? where location = ?";
             preparedStatement = (PreparedStatement) connection.prepareStatement(sql5);
             preparedStatement.setInt(1, inventory + 1);
             preparedStatement.setString(2, venue);

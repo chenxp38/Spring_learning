@@ -28,7 +28,7 @@ public class NoticeController {
         List<Notice> list = new ArrayList<Notice>();
         Integer length = 0;
         try {
-            String sql = "select * from notice";
+            String sql = "select * from Notice";
             connection = DB_User.open();
             //预编译SQL
             preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
