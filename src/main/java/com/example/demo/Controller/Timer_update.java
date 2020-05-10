@@ -65,7 +65,7 @@ public class Timer_update{
             LocalDate afterTomorrow = today.minusDays(-2);
             //打印减去一天的天数
             String str = afterTomorrow.toString();
-            System.out.println("日期的后天："+ str);
+            //System.out.println("日期的后天："+ str);
             try {
                 for (int i = 1; i < 49; i++){
                     String sql1 = "select * from Inventory where id = ?";
@@ -91,10 +91,10 @@ public class Timer_update{
                     preparedStatement.setInt(3, inventoryE);
                     if (i < 25){
                         preparedStatement.setString(4, today.toString());
-                        System.out.println(today.toString());
+                        //System.out.println(today.toString());
                     }else if (i < 49 && i > 24) {
                         preparedStatement.setString(4, tomorrow.toString());
-                        System.out.println(tomorrow.toString());
+                        //System.out.println(tomorrow.toString());
                     }
                     preparedStatement.setString(5, IntToStr(i));
                     preparedStatement.executeUpdate();
@@ -111,7 +111,7 @@ public class Timer_update{
                     preparedStatement.setInt(3, array[0]);
                     preparedStatement.setString(4, afterTomorrow.toString());
                     preparedStatement.setString(5, IntToStr(6*i + 1 + 48));
-                    System.out.println(IntToStr(6*i + 1 + 48));
+                    //System.out.println(IntToStr(6*i + 1 + 48));
                     preparedStatement.executeUpdate();
 
                     preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
@@ -120,7 +120,7 @@ public class Timer_update{
                     preparedStatement.setInt(3, array[1]);
                     preparedStatement.setString(4, afterTomorrow.toString());
                     preparedStatement.setString(5, IntToStr(6*i + 2 + 48));
-                    System.out.println(IntToStr(6*i + 2 + 48));
+                    //System.out.println(IntToStr(6*i + 2 + 48));
                     preparedStatement.executeUpdate();
 
                     preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
@@ -129,7 +129,7 @@ public class Timer_update{
                     preparedStatement.setInt(3, array[2]);
                     preparedStatement.setString(4, afterTomorrow.toString());
                     preparedStatement.setString(5, IntToStr(6*i + 3 + 48));
-                    System.out.println(IntToStr(6*i + 3 + 48));
+                    //System.out.println(IntToStr(6*i + 3 + 48));
                     preparedStatement.executeUpdate();
 
                     preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
@@ -138,7 +138,7 @@ public class Timer_update{
                     preparedStatement.setInt(3, array[3]);
                     preparedStatement.setString(4, afterTomorrow.toString());
                     preparedStatement.setString(5, IntToStr(6*i + 4 + 48));
-                    System.out.println(IntToStr(6*i + 4 + 48));
+                    //System.out.println(IntToStr(6*i + 4 + 48));
                     preparedStatement.executeUpdate();
 
                     preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
@@ -147,7 +147,7 @@ public class Timer_update{
                     preparedStatement.setInt(3, array[4]);
                     preparedStatement.setString(4, afterTomorrow.toString());
                     preparedStatement.setString(5, IntToStr(6*i + 5 + 48));
-                    System.out.println(IntToStr(6*i + 5 + 48));
+                    //System.out.println(IntToStr(6*i + 5 + 48));
                     preparedStatement.executeUpdate();
 
                     preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
@@ -156,7 +156,7 @@ public class Timer_update{
                     preparedStatement.setInt(3, array[5]);
                     preparedStatement.setString(4, afterTomorrow.toString());
                     preparedStatement.setString(5, IntToStr(6*i + 6 + 48));
-                    System.out.println(IntToStr(6*i + 6 + 48));
+                    //System.out.println(IntToStr(6*i + 6 + 48));
                     preparedStatement.executeUpdate();
                 }
             }catch (SQLException e) {
