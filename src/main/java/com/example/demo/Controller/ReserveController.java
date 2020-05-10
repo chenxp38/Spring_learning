@@ -4,9 +4,12 @@ package com.example.demo.Controller;
 import com.example.demo.pojo.DB_User;
 import com.example.demo.pojo.JSONResult;
 import com.example.demo.pojo.inventory;
+import org.junit.Test;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,27 +26,38 @@ public class ReserveController {
 
     @RequestMapping("/getInventory")
     @ResponseBody
-    public  JSONResult getInventory(@RequestHeader(name = "SessionID") String SessionID, @RequestParam(name = "venue") String venue) {
+    public JSONResult getInventory(@RequestHeader(name = "SessionID") String SessionID, @RequestParam(name = "venue") String venue, @RequestParam(name = "year") Integer year, @RequestParam(name = "month") Integer month, @RequestParam(name = "day") Integer day) {
         list.clear();
-        System.out.println(venue);
+        //Integer year = new Integer(2020);
+        //Integer month = 5;
+        //Integer day = 10;
+        Date currentDate = new Date(year - 1900, month - 1, day);
+        String venueTest = "东校区游泳池";
+        SimpleDateFormat currentDayFomat = new SimpleDateFormat("yyyy-MM-dd");
+        String sDate = currentDayFomat.format(currentDate);
+        System.out.println(venueTest + sDate);
         try {
-            String sql = "select * from Inventory where location like ?";
+            String sql = "select * from Inventory where location = ? and day = ?";
+
             connection = DB_User.open();
             //预编译SQL
             preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
             //设置参数值
-            preparedStatement.setString(1, venue+'%');
+            preparedStatement.setString(1, venueTest);
+            preparedStatement.setString(2, sDate);
             //执行SQL
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {//即使只有一条检索结果，也不能图省事去掉while，因为要判断resultSet，防止为null，用if判断应该也行
-                String id = resultSet.getString("id");
-                ///String location = resultSet.getString("location");
-                Integer inventory = resultSet.getInt("inventory"); //库存量
+                Integer inventoryM = resultSet.getInt("inventoryM"); //库存量
+                Integer inventoryN = resultSet.getInt("inventoryN"); //库存量
+                Integer inventoryE = resultSet.getInt("inventoryE"); //库存量
                 //boolean is_remainder = resultSet.getBoolean("is_remainder");
                 //Integer cost = resultSet.getInt("cost");
                 //inventory inventory1 = new inventory(id, location, inventory, is_remainder, cost);
-                //System.out.println(inventory1.toString());
-                list.add(inventory);
+                System.out.println(inventoryM + " " + inventoryN + " " + inventoryE);
+                list.add(inventoryM);
+                list.add(inventoryN);
+                list.add(inventoryE);
             }
             Integer length = list.size();
             return JSONResult.ok2(list, length);
@@ -69,7 +83,7 @@ public class ReserveController {
                 DB_User.close(connection);
             }
         }
-        return JSONResult.ok("list3");
+        return JSONResult.ok(list);
     }
 
     @RequestMapping("/reserve")
