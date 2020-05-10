@@ -21,7 +21,7 @@ public class Timer_update{
         int time = getRestTime();
         Timer timer = new Timer();//单位是毫秒
         //timer.schedule(new MyTask(), time, 1000*60*60*24);//在time秒后执行此任务,每次间隔24 hours执行一次.
-        timer.schedule(new MyTask(), time, 1000*60);//test
+        timer.schedule(new MyTask(), 1000, 1000*60);//test
         while(true){//这个是用来停止此任务的,否则就一直循环执行此任务
             int count = 0;
             if(count > 0){
