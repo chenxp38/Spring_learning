@@ -47,8 +47,10 @@ public class HistoryController {
                 order_id = resultSet.getString("order_id");
                 venue = resultSet.getString("venue");
                 Date date = resultSet.getDate("date");
+                String time = resultSet.getString("time");
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 String dateString = formatter.format(date);
+                dateString = dateString + " " + time;
                 History history = new History(uid, order_id, dateString, venue, cost);
                 list.add(history);
                 count++;

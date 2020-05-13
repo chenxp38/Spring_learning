@@ -88,105 +88,152 @@ public class ReserveController {
 
     @RequestMapping("/reserve")
     @ResponseBody
-    public JSONResult user_reserve(@RequestHeader(name = "SessionID") String SessionID, @RequestParam(name = "venue") String venue) {
+    public JSONResult userReserve(@RequestHeader(name = "SessionID") String SessionID, @RequestParam(name = "venue") String venue,  @RequestParam(name = "year") Integer year, @RequestParam(name = "month") Integer month,
+                                  @RequestParam(name = "day")Integer day, @RequestParam(name = "array") String[] array) {
+
+        //String venue = "东校区游泳池";
+        //Integer year = 2020, month = 5, day = 13;
+        //String [] array = {"6:30-8:00", "16:30-18:00", "19:30-21:00"};
+        //String openid = "o_L8C5ZE8t2_ON_fPaHoZWFnEgnE";
+
+        Date currentDate = new Date(year - 1900, month - 1, day);
+        SimpleDateFormat currentDayFomat = new SimpleDateFormat("yyyy-MM-dd");
+        String sDate = currentDayFomat.format(currentDate);
+        System.out.println(venue + sDate);
         //System.out.println(venue);
-        Integer inventory = 0;
+        Integer inventoryM = 0;
+        Integer inventoryN = 0;
+        Integer inventoryE = 0;
         String openid = null;
         String uid = null;
         Integer cost = 0;
-        Date date = new Date();
-        java.sql.Date date1 =  new java.sql.Date(date.getTime());
+        String date1 = sDate;
         Integer balance = 0;
 
 
         try {
-            String sql = "select * from Inventory where location = ?";
+            String sql = "select * from Inventory where location = ? and day = ?";
             connection = DB_User.open();
             //预编译SQL
             preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
             //设置参数值
             preparedStatement.setString(1, venue);
+            preparedStatement.setString(2, sDate);
+
             //执行SQL
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {//即使只有一条检索结果，也不能图省事去掉while，因为要判断resultSet，防止为null，用if判断应该也行
-                String location = resultSet.getString("location");
-                inventory = resultSet.getInt("inventory"); //库存量
+                inventoryM = resultSet.getInt("inventoryM"); //库存量
+                inventoryN = resultSet.getInt("inventoryN"); //库存量
+                inventoryE = resultSet.getInt("inventoryE"); //库存量
                 cost = resultSet.getInt("cost");
                 openid = getSessionValue(SessionID); //获取openid
 
             }
-            if (inventory > 0) {//检查是否还有库存
-                String sql2 = "select * from User where openid = ?";
-                preparedStatement = (PreparedStatement) connection.prepareStatement(sql2);
-                //设置参数值
-                preparedStatement.setString(1, openid);
-                //执行SQL
-                resultSet = preparedStatement.executeQuery();
-                resultSet.last();//函数的返回结果是当前数据集的行号，而不是结果的行数
-                if (resultSet.getRow() == 0) {//跳转到 ResultSet 最后一行，然后获取该行行号，若行号为0，则 ResultSet 为空。
-                    return JSONResult.errorMsg("用户未注册！");
+            Integer inventory = 0;
+            System.out.println("库存：" + inventoryM + " " + inventoryN + " " + inventoryE);
+            for (int i = 0; i < array.length; i++) {
+                if (array[i].equals("6:30-8:00")) {
+                    inventory = inventoryM;
+                } else if (array[i].equals("16:30-18:00")){
+                    inventory = inventoryN;
+                } else if (array[i].equals("19:30-21:00")){
+                    inventory = inventoryE;
                 }
-                resultSet.beforeFirst();
-                while (resultSet.next()) {//用if判断不行，亲测
-                    uid = resultSet.getString("uid");
-                    balance = resultSet.getInt("balance");
-                    System.out.println(uid + " " + balance + " " + inventory + " " + openid);
-                }
-                //有库存并且能找到该用户的注册信息
-                //检查该用户今天是否已经预定了该场馆
-                String sql3 = "select * from Order_table where uid = ? and venue = ? and date = ?";
-                //预编译
-                preparedStatement = (PreparedStatement) connection.prepareStatement(sql3);
-                //设置参数值
-                preparedStatement.setString(1, uid);
-                preparedStatement.setString(2, venue);
-                preparedStatement.setDate(3, date1);
-                System.out.println(date1.toString());
-                //执行SQL
-                resultSet = preparedStatement.executeQuery();
-                //判断是否重复预定
-                resultSet.last();
-                if (resultSet.getRow() == 0) {//行号为0，则 ResultSet 为空。
-                    //可以预定，插入数据
+                if (inventory > 0) {//检查是否还有库存
+                    String sql2 = "select * from User where openid = ?";
+                    preparedStatement = (PreparedStatement) connection.prepareStatement(sql2);
+                    //设置参数值
+                    preparedStatement.setString(1, openid);
+                    //执行SQL
+                    resultSet = preparedStatement.executeQuery();
+                    resultSet.last();//函数的返回结果是当前数据集的行号，而不是结果的行数
+                    if (resultSet.getRow() == 0) {//跳转到 ResultSet 最后一行，然后获取该行行号，若行号为0，则 ResultSet 为空。
+                        return JSONResult.errorMsg("用户未注册！");
+                        //System.out.println("用户未注册！");
+                    }
                     resultSet.beforeFirst();
-                    if (balance < cost) {
-                        return JSONResult.errorMsg("您的运动时余额不足啦！");
+                    while (resultSet.next()) {//用if判断不行，亲测
+                        uid = resultSet.getString("uid");
+                        balance = resultSet.getInt("balance");
+                        System.out.println(uid + " " + balance + " " + inventory + " " + openid);
                     }
-                    Integer count = getOrderCount();
-                    String order_id = getOrderid(count);
-                    //System.out.println("count: " + " " + count + " " + order_id);
-                    String sql4 = "insert into Order_table(order_id, uid, date, venue, cost, status) VALUES (?, ?, ?, ?, ?, ?)";
-                    preparedStatement = (PreparedStatement) connection.prepareStatement(sql4);
-                    preparedStatement.setString(1, order_id);
-                    preparedStatement.setString(2, uid);
-                    preparedStatement.setDate(3, date1);
-                    preparedStatement.setString(4, venue);
-                    preparedStatement.setInt(5, cost);
-                    preparedStatement.setInt(6, 1);
-
-                    preparedStatement.executeUpdate();//注意执行的方法名,insert和update时要特别注意
-                    //预定成功，对应场馆的库存量减一
-                    String sql5 = "update inventory set Inventory = ? where location = ?";
-                    preparedStatement = (PreparedStatement) connection.prepareStatement(sql5);
-                    preparedStatement.setInt(1, inventory - 1);
+                    //有库存并且能找到该用户的注册信息
+                    //检查该用户今天是否已经预定了该场馆
+                    String sql3 = "select * from Order_table where uid = ? and venue = ? and date = ? and time = ?";
+                    //预编译
+                    preparedStatement = (PreparedStatement) connection.prepareStatement(sql3);
+                    //设置参数值
+                    preparedStatement.setString(1, uid);
                     preparedStatement.setString(2, venue);
-                    preparedStatement.executeUpdate();
-                    //用户运动时余额减去相应cost
-                    String sql6 = "update User set balance = ? where uid = ?";
-                    preparedStatement = (PreparedStatement) connection.prepareStatement(sql6);
-                    preparedStatement.setInt(1, balance - cost);
-                    preparedStatement.setString(2, uid);
-                    preparedStatement.executeUpdate();
-                }
-                else {
-                    while (resultSet.next()) {
-                        System.out.println("date:?" + resultSet.getDate("date"));
+                    String time = null;
+                    if (array[i].equals("6:30-8:00")) {
+                        time = "06:30:00";
+                    } else if (array[i].equals("16:30-18:00")) {
+                        time = "16:30:00";
+                    } else if (array[i].equals("19:30-21:00")) {
+                        time = "19:30:00";
                     }
-                    return JSONResult.errorMsg("今日您已预定该场馆！");
+                    preparedStatement.setString(3, sDate);
+                    System.out.println("reserveDate: " + sDate.toString());
+                    preparedStatement.setString(4, time);
+                    //执行SQL
+                    resultSet = preparedStatement.executeQuery();
+                    //判断是否重复预定
+                    resultSet.last();
+                    if (resultSet.getRow() == 0) {//行号为0，则 ResultSet 为空。
+                        //可以预定，插入数据
+                        resultSet.beforeFirst();
+                        if (balance < cost) {
+                            //return JSONResult.errorMsg("您的运动时余额不足啦！");
+                            System.out.println("您的运动时余额不足啦！");
+                        }
+                        Integer count = getOrderCount();
+                        String order_id = getOrderid(count);
+                        //System.out.println("count: " + " " + count + " " + order_id);
+                        String sql4 = "insert into Order_table(order_id, uid, venue, cost, status, time, date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                        preparedStatement = (PreparedStatement) connection.prepareStatement(sql4);
+                        preparedStatement.setString(1, order_id);
+                        preparedStatement.setString(2, uid);
+                        preparedStatement.setString(3, venue);
+                        preparedStatement.setInt(4, cost);
+                        preparedStatement.setInt(5, 1);
+                        preparedStatement.setString(6, time);
+                        preparedStatement.setString(7, date1);
+
+                        preparedStatement.executeUpdate();//注意执行的方法名,insert和update时要特别注意
+                        //预定成功，对应场馆的库存量减一
+                        String sql5 = null;
+                        if (array[i].equals("6:30-8:00")) {
+                            sql5 = "update Inventory set inventoryM = ? where location = ? and day = ?";
+                        } else if (array[i].equals("16:30-18:00")) {
+                            sql5 = "update Inventory set inventoryN = ? where location = ? and day = ?";
+                        } else if (array[i].equals("19:30-21:00")) {
+                            sql5 = "update Inventory set inventoryE = ? where location = ? and day = ?";
+                        }
+                        preparedStatement = (PreparedStatement) connection.prepareStatement(sql5);
+                        preparedStatement.setInt(1, inventory - 1);
+                        preparedStatement.setString(2, venue);
+                        preparedStatement.setString(3, sDate);
+                        preparedStatement.executeUpdate();
+                        //用户运动时余额减去相应cost
+                        String sql6 = "update User set balance = ? where uid = ?";
+                        preparedStatement = (PreparedStatement) connection.prepareStatement(sql6);
+                        preparedStatement.setInt(1, balance - cost);
+                        preparedStatement.setString(2, uid);
+                        preparedStatement.executeUpdate();
+                    } else {
+                        while (resultSet.next()) {
+                            System.out.println("date:?" + resultSet.getDate("date"));
+                        }
+                        return JSONResult.errorMsg("今日您已预定该场馆！");
+                        //System.out.println("今日您已预定该场馆！");
+                    }
+                } else {
+                    return JSONResult.errorMsg("今日人数已满！");
+                    //System.out.println("今日人数已满！");
                 }
-            }else {
-                return JSONResult.errorMsg("今日人数已满！");
             }
 
 
