@@ -4,6 +4,7 @@ package com.example.demo.Controller;
 import com.example.demo.pojo.DB_User;
 import com.example.demo.pojo.JSONResult;
 import com.example.demo.pojo.inventory;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.springframework.web.bind.annotation.*;
 
@@ -100,8 +101,9 @@ public class ReserveController {
         SimpleDateFormat currentDayFomat = new SimpleDateFormat("yyyy-MM-dd");
         String sDate = currentDayFomat.format(currentDate);
         System.out.println(venue + sDate);
+        //array = StringUtils.strip(array.toString(),"[]");
         for (int i = 0; i < array.size(); i++) {
-            System.out.println(array.get(i));
+            System.out.println(StringUtils.strip(array.get(0).toString(),"[]"));
         }
         Integer inventoryM = 0;
         Integer inventoryN = 0;
