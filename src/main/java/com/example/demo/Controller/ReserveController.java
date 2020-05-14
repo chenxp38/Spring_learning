@@ -103,7 +103,7 @@ public class ReserveController {
         System.out.println(venue + sDate);
         //array = StringUtils.strip(array.toString(),"[]");
         for (int i = 0; i < array.size(); i++) {
-            System.out.println(StringUtils.strip(array.get(0).toString(),"[]"));
+            System.out.println(StringUtils.strip(array.get(i).toString(),"[]"));
         }
         Integer inventoryM = 0;
         Integer inventoryN = 0;
@@ -138,13 +138,13 @@ public class ReserveController {
             Integer inventory = 0;
             System.out.println("库存：" + inventoryM + " " + inventoryN + " " + inventoryE + " " + array.size());
             for (int i = 0; i < array.size(); i++) {
-                if (array.get(i).equals("0")) {
+                if (StringUtils.strip(array.get(i).toString(),"[]").equals("0")) {
                     inventory = inventoryM;
                     System.out.println("hh");
-                } else if (array.get(i).equals("1")){
+                } else if (StringUtils.strip(array.get(i).toString(),"[]").equals("1")){
                     inventory = inventoryN;
                     System.out.println("hhh");
-                } else if (array.get(i).equals("2")){
+                } else if (StringUtils.strip(array.get(i).toString(),"[]").equals("2")){
                     inventory = inventoryE;
                     System.out.println("hhhh");
                 }
@@ -176,11 +176,11 @@ public class ReserveController {
                     preparedStatement.setString(1, uid);
                     preparedStatement.setString(2, venue);
                     String time = null;
-                    if (array.get(i).equals("0")) {
+                    if (StringUtils.strip(array.get(i).toString(),"[]").equals("0")) {
                         time = "06:30:00";
-                    } else if (array.get(i).equals("1")) {
+                    } else if (StringUtils.strip(array.get(i).toString(),"[]").equals("1")) {
                         time = "16:30:00";
-                    } else if (array.get(i).equals("2")) {
+                    } else if (StringUtils.strip(array.get(i).toString(),"[]").equals("2")) {
                         time = "19:30:00";
                     }
                     preparedStatement.setString(3, sDate);
@@ -213,11 +213,11 @@ public class ReserveController {
                         preparedStatement.executeUpdate();//注意执行的方法名,insert和update时要特别注意
                         //预定成功，对应场馆的库存量减一
                         String sql5 = null;
-                        if (array.get(i).equals("0")) {
+                        if (StringUtils.strip(array.get(i).toString(),"[]").equals("0")) {
                             sql5 = "update Inventory set inventoryM = ? where location = ? and day = ?";
-                        } else if (array.get(i).equals("1")) {
+                        } else if (StringUtils.strip(array.get(i).toString(),"[]").equals("1")) {
                             sql5 = "update Inventory set inventoryN = ? where location = ? and day = ?";
-                        } else if (array.get(i).equals("2")) {
+                        } else if (StringUtils.strip(array.get(i).toString(),"[]").equals("2")) {
                             sql5 = "update Inventory set inventoryE = ? where location = ? and day = ?";
                         }
                         preparedStatement = (PreparedStatement) connection.prepareStatement(sql5);
