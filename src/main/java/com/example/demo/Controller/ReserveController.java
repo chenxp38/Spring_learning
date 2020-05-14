@@ -89,7 +89,7 @@ public class ReserveController {
     @RequestMapping("/reserve")
     @ResponseBody
     public JSONResult userReserve(@RequestHeader(name = "SessionID") String SessionID, @RequestParam(name = "venue") String venue,  @RequestParam(name = "year") Integer year, @RequestParam(name = "month") Integer month,
-                                  @RequestParam(name = "day")Integer day, @RequestParam(name = "array") String [] array) {
+                                  @RequestParam(name = "day")Integer day, @RequestParam(name = "array") List<String> array) {
 
         //String venue = "东校区游泳池";
         //Integer year = 2020, month = 5, day = 13;
@@ -100,8 +100,8 @@ public class ReserveController {
         SimpleDateFormat currentDayFomat = new SimpleDateFormat("yyyy-MM-dd");
         String sDate = currentDayFomat.format(currentDate);
         System.out.println(venue + sDate);
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i]);
+        for (int i = 0; i < array.size(); i++) {
+            System.out.println(array.get(i));
         }
         Integer inventoryM = 0;
         Integer inventoryN = 0;
@@ -134,15 +134,15 @@ public class ReserveController {
 
             }
             Integer inventory = 0;
-            System.out.println("库存：" + inventoryM + " " + inventoryN + " " + inventoryE + " " + array.length);
-            for (int i = 0; i < array.length; i++) {
-                if (Integer.parseInt(array[i]) == 0) {
+            System.out.println("库存：" + inventoryM + " " + inventoryN + " " + inventoryE + " " + array.size());
+            for (int i = 0; i < array.size(); i++) {
+                if (array.get(i).equals("0")) {
                     inventory = inventoryM;
                     System.out.println("hh");
-                } else if (Integer.parseInt(array[i]) == 1){
+                } else if (array.get(i).equals("1")){
                     inventory = inventoryN;
                     System.out.println("hhh");
-                } else if (Integer.parseInt(array[i]) == 2){
+                } else if (array.get(i).equals("2")){
                     inventory = inventoryE;
                     System.out.println("hhhh");
                 }
@@ -174,11 +174,11 @@ public class ReserveController {
                     preparedStatement.setString(1, uid);
                     preparedStatement.setString(2, venue);
                     String time = null;
-                    if (Integer.parseInt(array[i]) == 0) {
+                    if (array.get(i).equals("0")) {
                         time = "06:30:00";
-                    } else if (Integer.parseInt(array[i]) == 1) {
+                    } else if (array.get(i).equals("1")) {
                         time = "16:30:00";
-                    } else if (Integer.parseInt(array[i]) == 2) {
+                    } else if (array.get(i).equals("2")) {
                         time = "19:30:00";
                     }
                     preparedStatement.setString(3, sDate);
@@ -211,11 +211,11 @@ public class ReserveController {
                         preparedStatement.executeUpdate();//注意执行的方法名,insert和update时要特别注意
                         //预定成功，对应场馆的库存量减一
                         String sql5 = null;
-                        if (Integer.parseInt(array[i]) == 0) {
+                        if (array.get(i).equals("0")) {
                             sql5 = "update Inventory set inventoryM = ? where location = ? and day = ?";
-                        } else if (Integer.parseInt(array[i]) == 1) {
+                        } else if (array.get(i).equals("1")) {
                             sql5 = "update Inventory set inventoryN = ? where location = ? and day = ?";
-                        } else if (Integer.parseInt(array[i]) == 2) {
+                        } else if (array.get(i).equals("2")) {
                             sql5 = "update Inventory set inventoryE = ? where location = ? and day = ?";
                         }
                         preparedStatement = (PreparedStatement) connection.prepareStatement(sql5);
