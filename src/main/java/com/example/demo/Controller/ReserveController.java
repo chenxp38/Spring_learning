@@ -136,13 +136,13 @@ public class ReserveController {
             Integer inventory = 0;
             System.out.println("库存：" + inventoryM + " " + inventoryN + " " + inventoryE + " " + array.length);
             for (int i = 0; i < array.length; i++) {
-                if (array[i].equals("0")) {
+                if (Integer.parseInt(array[i]) == 0) {
                     inventory = inventoryM;
                     System.out.println("hh");
-                } else if (array[i].equals("1")){
+                } else if (Integer.parseInt(array[i]) == 1){
                     inventory = inventoryN;
                     System.out.println("hhh");
-                } else if (array[i].equals("2")){
+                } else if (Integer.parseInt(array[i]) == 2){
                     inventory = inventoryE;
                     System.out.println("hhhh");
                 }
@@ -174,11 +174,11 @@ public class ReserveController {
                     preparedStatement.setString(1, uid);
                     preparedStatement.setString(2, venue);
                     String time = null;
-                    if (array[i].equals("0")) {
+                    if (Integer.parseInt(array[i]) == 0) {
                         time = "06:30:00";
-                    } else if (array[i].equals("1")) {
+                    } else if (Integer.parseInt(array[i]) == 1) {
                         time = "16:30:00";
-                    } else if (array[i].equals("2")) {
+                    } else if (Integer.parseInt(array[i]) == 2) {
                         time = "19:30:00";
                     }
                     preparedStatement.setString(3, sDate);
@@ -211,11 +211,11 @@ public class ReserveController {
                         preparedStatement.executeUpdate();//注意执行的方法名,insert和update时要特别注意
                         //预定成功，对应场馆的库存量减一
                         String sql5 = null;
-                        if (array[i].equals("0")) {
+                        if (Integer.parseInt(array[i]) == 0) {
                             sql5 = "update Inventory set inventoryM = ? where location = ? and day = ?";
-                        } else if (array[i].equals("1")) {
+                        } else if (Integer.parseInt(array[i]) == 1) {
                             sql5 = "update Inventory set inventoryN = ? where location = ? and day = ?";
-                        } else if (array[i].equals("2")) {
+                        } else if (Integer.parseInt(array[i]) == 2) {
                             sql5 = "update Inventory set inventoryE = ? where location = ? and day = ?";
                         }
                         preparedStatement = (PreparedStatement) connection.prepareStatement(sql5);
