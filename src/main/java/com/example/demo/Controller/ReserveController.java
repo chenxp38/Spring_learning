@@ -100,7 +100,9 @@ public class ReserveController {
         SimpleDateFormat currentDayFomat = new SimpleDateFormat("yyyy-MM-dd");
         String sDate = currentDayFomat.format(currentDate);
         System.out.println(venue + sDate);
-        //System.out.println(venue);
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(array[i]);
+        }
         Integer inventoryM = 0;
         Integer inventoryN = 0;
         Integer inventoryE = 0;
