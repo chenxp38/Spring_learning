@@ -134,14 +134,17 @@ public class ReserveController {
 
             }
             Integer inventory = 0;
-            System.out.println("库存：" + inventoryM + " " + inventoryN + " " + inventoryE);
+            System.out.println("库存：" + inventoryM + " " + inventoryN + " " + inventoryE + " " + array.length);
             for (int i = 0; i < array.length; i++) {
                 if (array[i].equals("6:30-8:00")) {
                     inventory = inventoryM;
+                    System.out.println("hh");
                 } else if (array[i].equals("16:30-18:00")){
                     inventory = inventoryN;
+                    System.out.println("hhh");
                 } else if (array[i].equals("19:30-21:00")){
                     inventory = inventoryE;
+                    System.out.println("hhhh");
                 }
                 System.out.println("查询库存: " + inventory);
                 if (inventory > 0) {//检查是否还有库存
