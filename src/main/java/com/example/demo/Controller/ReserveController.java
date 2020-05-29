@@ -148,7 +148,7 @@ public class ReserveController {
                     inventory = inventoryE;
                     System.out.println("hhhh");
                 }
-                System.out.println("查询库存: " + inventory);
+                System.out.println("查询库存: " + inventory + "openid: " + openid);
                 if (inventory > 0) {//检查是否还有库存
                     String sql2 = "select * from User where openid = ?";
                     preparedStatement = (PreparedStatement) connection.prepareStatement(sql2);
