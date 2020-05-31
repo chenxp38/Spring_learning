@@ -109,7 +109,7 @@ public class LoginController {
         list.add(openid);
 
         try {
-            HttpSession session = request.getSession();
+            HttpSession session = request.getSession(true);
             //session.setMaxInactiveInterval(6000); //方法体内的参数interval为秒。
             System.out.println(openid + session.getId());
             saveSession(session.getId(), openid);
