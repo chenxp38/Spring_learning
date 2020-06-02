@@ -13,10 +13,7 @@ import redis.clients.jedis.Jedis;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.example.demo.Controller.RedisLinkTest.saveSession;
 
@@ -111,14 +108,20 @@ public class LoginController {
         try {
             HttpSession session = request.getSession(true);
             //session.setMaxInactiveInterval(6000); //方法体内的参数interval为秒。
-            System.out.println(openid + session.getId());
-            saveSession(session.getId(), openid);
-            sessionID = session.getId();
+            System.out.println(openid + sessionID);
+            sessionID = generateId();
+            saveSession(sessionID, openid);
+            //sessionID = session.getId();
             list.add(sessionID);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public String generateId() {
+        System.out.println(UUID.randomUUID().toString());
+        return UUID.randomUUID().toString();
     }
 
 
