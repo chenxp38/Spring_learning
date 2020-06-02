@@ -104,15 +104,15 @@ public class LoginController {
         System.out.println("getOpenid:" + openIdJson.getOpenid());
         openid = openIdJson.getOpenid();
         list.add(openid);
-
+        sessionID = generateId();
+        list.add(sessionID);
         try {
             HttpSession session = request.getSession(true);
             //session.setMaxInactiveInterval(6000); //方法体内的参数interval为秒。
-            sessionID = generateId();
-            System.out.println("openid" + openid + "sessionID:" + sessionID);
+
+            System.out.println("openid: " + openid + " sessionID: " + sessionID);
             saveSession(sessionID, openid);
             //sessionID = session.getId();
-            list.add(sessionID);
         } catch (Exception e) {
             e.printStackTrace();
         }
